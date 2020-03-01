@@ -20,6 +20,7 @@ configurations {
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
@@ -30,9 +31,10 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.2.51")
     implementation("io.github.microutils:kotlin-logging:1.7.8")
     implementation("com.google.code.gson:gson:2.8.5")
+    implementation("com.byteowls:jopencage:1.3.0")
 
 
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    // developmentOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }

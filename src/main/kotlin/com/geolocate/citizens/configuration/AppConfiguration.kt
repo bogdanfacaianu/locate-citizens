@@ -1,6 +1,5 @@
 package com.geolocate.citizens.configuration
 
-import com.google.gson.GsonBuilder
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
@@ -11,11 +10,6 @@ import java.time.Duration
 @ComponentScan
 @Configuration
 class AppConfiguration {
-
-    @Bean
-    fun gsonBuilder(): GsonBuilder {
-        return GsonBuilder()
-    }
 
     @Bean
     fun restTemplate(restTemplateBuilder: RestTemplateBuilder): RestTemplate? {
