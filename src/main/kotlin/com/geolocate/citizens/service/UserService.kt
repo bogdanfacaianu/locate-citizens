@@ -14,36 +14,34 @@ class UserService(
         private val userDistanceCalculator: UserDistanceCalculator
 ) {
 
-    fun getUsersForData(location: String?, distance: Double, locationCoordinates: Coordinates): Collection<User> {
-        return getUsersInSpecifiedRange(location, distance, locationCoordinates)
-    }
+    fun getUsersForData(
+            location: String,
+            distance: Double,
+            locationCoordinates: Coordinates
+    ): Collection<User> = getUsersInSpecifiedRange(location, distance, locationCoordinates)
 
-    fun getAllUsersInLocation(location: String?): Collection<User> {
-        return location?.let {
-            findUsersFromLocation(location)
-        } ?: run {
-            logger.debug { "No location provided for fetching users" }
-            return emptySet()
-        }
-    }
+    private fun getAllUsersInLocation(
+            location: String
+    ): Collection<User> = findUsersFromLocation(location)
 
-    private fun getUsersInSpecifiedRange(location: String?, distance: Double, extremityCoordinates: Coordinates): Collection<User> {
-        val allUsers = filterUsersDistance(findAllUsers(), distance, extremityCoordinates)
-        val usersInLocation = filterUsersDistance(getAllUsersInLocation(location), distance, extremityCoordinates)
+    private fun getUsersInSpecifiedRange(
+            location: String,
+            distance: Double,
+            extremityCoordinates: Coordinates
+    ): Collection<User> {
+        val allUsers = filterUsersDistance(findAllUsers(), distance, extremityCoordinates, location)
+        val usersInLocation = filterUsersDistance(getAllUsersInLocation(location), distance, extremityCoordinates, location)
         return allUsers.union(usersInLocation)
     }
 
-    private fun filterUsersDistance(users: Collection<User>, distance: Double, extremityCoordinates: Coordinates): Collection<User> {
-        return users.filter { user -> evaluateUserDistance(user, distance, extremityCoordinates) }.toSet()
-    }
+    private fun filterUsersDistance(
+            users: Collection<User>,
+            distance: Double,
+            extremityCoordinates: Coordinates,
+            location: String
+    ): Collection<User> = userDistanceCalculator.setUsersWithDistance(users, distance, extremityCoordinates, location)
 
-    private fun evaluateUserDistance(
-            user: User,
-            distanceLimit: Double,
-            extremityCoordinates: Coordinates
-    ) = userDistanceCalculator.checkUserDistance(user, extremityCoordinates, distanceLimit)
-
-    fun findAllUsers() = usersApiOperations.getAllUsers()
+    private fun findAllUsers() = usersApiOperations.getAllUsers()
 
     private fun findUsersFromLocation(location: String) = usersApiOperations.getAllCityUsers(location)
 }

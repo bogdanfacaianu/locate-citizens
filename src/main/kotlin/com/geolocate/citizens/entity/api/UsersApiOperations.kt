@@ -16,7 +16,6 @@ class UsersApiOperations(
         private val usersApi: UsersApi
 ) {
 
-
     fun getUserDataById(userId: String): User? {
         return try {
             val userUrl = usersApi.toUserUrl(userId)

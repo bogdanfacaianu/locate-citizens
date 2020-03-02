@@ -11,7 +11,7 @@ data class Coordinates(
         val longitude: Double
 ) {
 
-    // Distance calculation formula implemented from
+    // Distance calculation with the Haversine Formula implemented from
     // https://www.movable-type.co.uk/scripts/latlong.html
 
     fun computeDistanceFrom(destination: Coordinates): Double {
@@ -20,12 +20,11 @@ data class Coordinates(
 
         val latitudeDifference = Math.toRadians(destination.latitude - this.latitude)
         val longitudeDifference = Math.toRadians(destination.longitude - this.longitude)
-        val originalLatitude = Math.toRadians(this.latitude)
-        val originalLongitude = Math.toRadians(destination.latitude)
+        val sourceOriginalLatitude = Math.toRadians(this.latitude)
+        val destinationOriginalLatitude = Math.toRadians(destination.latitude)
 
-        val a = sin(latitudeDifference / 2).pow(2.toDouble()) +
-                cos(originalLatitude) * cos(originalLongitude) *
-                sin(longitudeDifference / 2).pow(2.toDouble())
+        val a = sin(latitudeDifference / 2).pow(2) +
+                (sin(longitudeDifference / 2).pow(2)) * cos(sourceOriginalLatitude) * cos(destinationOriginalLatitude)
 
         val c = 2 * asin(sqrt(a))
 

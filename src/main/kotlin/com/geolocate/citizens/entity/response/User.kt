@@ -11,18 +11,19 @@ data class User(
         @JsonProperty("ip_address") val ipAddress: String = "",
         @JsonProperty("latitude") val latitude: Double = 0.0,
         @JsonProperty("longitude") val longitude: Double = 0.0,
-        @JsonProperty("city") val city: String = "",
+        @JsonProperty("city") val location: String = "",
         val distance: Double = 0.0  // in miles
 ) {
-    fun updateCity(updatedCity: String) = this.copy(city = updatedCity)
+    fun updateLocation(updatedLocation: String) = this.copy(location = updatedLocation)
 
-    fun updateDistance(updatedDistance: Double) = this.copy(distance = updatedDistance)
+    fun setDistanceAndLocation(updatedDistance: Double, updatedLocation: String)
+            = this.copy(distance = updatedDistance, location = updatedLocation)
 
     fun toCoordinates() = Coordinates(this.latitude, this.longitude)
 }
 
 class UsersList : MutableList<User> by ArrayList() {
-    fun updateUsersCity(city: String): Set<User> {
-        return this.map { it.updateCity(city) }.toSet()
-    }
+
+    fun updateUsersCity(location: String): Set<User> = this.map { it.updateLocation(location) }.toSet()
+
 }

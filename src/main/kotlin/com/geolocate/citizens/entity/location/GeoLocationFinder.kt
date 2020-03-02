@@ -1,10 +1,11 @@
-package com.geolocate.citizens.entity.api
+package com.geolocate.citizens.entity.location
 
 import com.byteowls.jopencage.JOpenCageGeocoder
 import com.byteowls.jopencage.model.JOpenCageForwardRequest
 import com.byteowls.jopencage.model.JOpenCageLatLng
 import com.byteowls.jopencage.model.JOpenCageResponse
 import com.geolocate.citizens.entity.Coordinates
+import com.geolocate.citizens.entity.location.GeoLocation.Companion.UK_COUNTRY_CODE
 import mu.KotlinLogging
 import org.springframework.stereotype.Component
 
@@ -47,10 +48,6 @@ class GeoLocationFinder(
         } else {
             request.restrictToCountryCode = countryCode
         }
-    }
-
-    companion object {
-        const val UK_COUNTRY_CODE = "UK"
     }
 
 }
