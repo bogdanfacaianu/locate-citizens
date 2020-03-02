@@ -1,15 +1,15 @@
 package com.geolocate.citizens.service
 
-import com.geolocate.citizens.entity.Coordinates
+import com.geolocate.citizens.entity.coordinates.Coordinates
 import com.geolocate.citizens.entity.location.GeoLocationCache
-import com.geolocate.citizens.entity.response.User
+import com.geolocate.citizens.entity.user.response.User
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
 
 private val logger = KotlinLogging.logger {}
 
 @Service
-class UsersInLocationService(
+class UsersLocationService(
         private val geoLocationCache: GeoLocationCache,
         private val userService: UserService
 ) {

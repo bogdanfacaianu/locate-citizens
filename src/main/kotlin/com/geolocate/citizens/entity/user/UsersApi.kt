@@ -1,4 +1,4 @@
-package com.geolocate.citizens.entity.api
+package com.geolocate.citizens.entity.user
 
 data class UsersApi(
         val url: String

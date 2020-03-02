@@ -1,7 +1,7 @@
-package com.geolocate.citizens.entity.response
+package com.geolocate.citizens.entity.user.response
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.geolocate.citizens.entity.Coordinates
+import com.geolocate.citizens.entity.coordinates.Coordinates
 
 data class User(
         @JsonProperty("id") val id: String = "",

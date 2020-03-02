@@ -1,6 +1,6 @@
 package com.geolocate.citizens.entity.location
 
-import com.geolocate.citizens.entity.Coordinates
+import com.geolocate.citizens.entity.coordinates.Coordinates
 import org.springframework.stereotype.Component
 
 @Component

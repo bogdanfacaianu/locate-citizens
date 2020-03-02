@@ -1,7 +1,7 @@
-package com.geolocate.citizens.entity.api
+package com.geolocate.citizens.entity.user
 
-import com.geolocate.citizens.entity.response.User
-import com.geolocate.citizens.entity.response.UsersList
+import com.geolocate.citizens.entity.user.response.User
+import com.geolocate.citizens.entity.user.response.UsersList
 import mu.KotlinLogging
 import org.springframework.http.HttpStatus.NOT_FOUND
 import org.springframework.http.HttpStatus.OK

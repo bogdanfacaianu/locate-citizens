@@ -1,8 +1,8 @@
 package com.geolocate.citizens.service
 
-import com.geolocate.citizens.entity.Coordinates
-import com.geolocate.citizens.entity.api.UsersApiOperations
-import com.geolocate.citizens.entity.response.User
+import com.geolocate.citizens.entity.coordinates.Coordinates
+import com.geolocate.citizens.entity.user.UsersApiOperations
+import com.geolocate.citizens.entity.user.response.User
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
 
@@ -17,8 +17,8 @@ class UserService(
     fun getUsersForData(
             location: String,
             distance: Double,
-            locationCoordinates: Coordinates
-    ): Collection<User> = getUsersInSpecifiedRange(location, distance, locationCoordinates)
+            centralPoint: Coordinates
+    ): Collection<User> = getUsersInSpecifiedRange(location, distance, centralPoint)
 
     private fun getAllUsersInLocation(
             location: String
@@ -27,19 +27,19 @@ class UserService(
     private fun getUsersInSpecifiedRange(
             location: String,
             distance: Double,
-            extremityCoordinates: Coordinates
+            centralPoint: Coordinates
     ): Collection<User> {
-        val allUsers = filterUsersDistance(findAllUsers(), distance, extremityCoordinates, location)
-        val usersInLocation = filterUsersDistance(getAllUsersInLocation(location), distance, extremityCoordinates, location)
+        val allUsers = filterUsersDistance(findAllUsers(), distance, centralPoint, location)
+        val usersInLocation = filterUsersDistance(getAllUsersInLocation(location), distance, centralPoint, location)
         return allUsers.union(usersInLocation)
     }
 
     private fun filterUsersDistance(
             users: Collection<User>,
             distance: Double,
-            extremityCoordinates: Coordinates,
+            centralPoint: Coordinates,
             location: String
-    ): Collection<User> = userDistanceCalculator.setUsersWithDistance(users, distance, extremityCoordinates, location)
+    ): Collection<User> = userDistanceCalculator.setUsersWithDistance(users, distance, centralPoint, location)
 
     private fun findAllUsers() = usersApiOperations.getAllUsers()
 

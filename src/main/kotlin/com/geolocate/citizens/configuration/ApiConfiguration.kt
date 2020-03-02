@@ -1,7 +1,7 @@
 package com.geolocate.citizens.configuration
 
 import com.byteowls.jopencage.JOpenCageGeocoder
-import com.geolocate.citizens.entity.api.UsersApi
+import com.geolocate.citizens.entity.user.UsersApi
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
