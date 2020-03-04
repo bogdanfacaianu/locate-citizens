@@ -1,6 +1,7 @@
 package com.geolocate.citizens.entity.coordinates
 
 import kotlin.math.asin
+import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.pow
 import kotlin.math.sin
@@ -27,7 +28,7 @@ data class Coordinates(
                 (sin(longitudeDifferenceInRadians / 2).pow(2)) *
                 cos(sourceLatitudeInRadians) * cos(destinationLatitudeInRadians)
 
-        val c = 2 * asin(sqrt(a))
+        val c = 2 * atan2(sqrt(a), sqrt(1-a))
 
         return earthRadiusInMiles * c
     }

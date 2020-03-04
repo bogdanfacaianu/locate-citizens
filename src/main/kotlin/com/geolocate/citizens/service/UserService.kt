@@ -10,8 +10,7 @@ private val logger = KotlinLogging.logger {}
 
 @Service
 class UserService(
-        private val usersApiOperations: UsersApiOperations,
-        private val userDistanceCalculator: UserDistanceCalculator
+        private val usersApiOperations: UsersApiOperations
 ) {
 
     fun getUsersForData(
@@ -39,7 +38,7 @@ class UserService(
             distance: Double,
             centralPoint: Coordinates,
             location: String
-    ): Collection<User> = userDistanceCalculator.setUsersWithDistance(users, distance, centralPoint, location)
+    ): Collection<User> = setUsersWithDistance(users, distance, centralPoint, location)
 
     private fun findAllUsers() = usersApiOperations.getAllUsers()
 

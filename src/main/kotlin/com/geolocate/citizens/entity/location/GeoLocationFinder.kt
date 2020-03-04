@@ -29,12 +29,13 @@ class GeoLocationFinder(
         request.limit = 1;
         request.isNoAnnotations = true;
 
-        val response: JOpenCageResponse = jOpenCageGeocoder.forward(request)
-        return response.firstPosition
+        val response = jOpenCageGeocoder.forward(request)
+        return response?.firstPosition
     }
 
     private fun buildResult(locationFound: JOpenCageLatLng?, location: String): Coordinates? {
         return locationFound?.let {
+            logger.info { "For location=$location the following coordinates were found: latitude=${it.lat} longitude=${it.lng}" }
             Coordinates(locationFound.lat, locationFound.lng)
         } ?: run {
             logger.warn { "No coordinates could be retrieved for location $location" }

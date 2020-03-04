@@ -16,20 +16,6 @@ class UsersApiOperations(
         private val usersApi: UsersApi
 ) {
 
-    fun getUserDataById(userId: String): User? {
-        return try {
-            val userUrl = usersApi.toUserUrl(userId)
-            val response = restTemplate.getForEntity(userUrl, User::class.java)
-            return when(response.statusCode) {
-                OK -> response.body
-                else -> null
-            }
-        } catch (ex: Exception) {
-            logger.error { "Fetching user with id $userId failed with error ${ex.message}" }
-            null
-        }
-    }
-
     fun getAllUsers(): Collection<User> {
         return try {
             val usersUrl = usersApi.toAllUsersUrl()

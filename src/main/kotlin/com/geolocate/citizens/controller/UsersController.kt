@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class UserController(
+class UsersController(
         private val usersLocationService: UsersLocationService
 ) {
 
@@ -19,9 +19,6 @@ class UserController(
                               @RequestParam(defaultValue = "50.0") distance: Double
     ): ResponseEntity<*> {
         val foundUsers = usersLocationService.getUserDataInLocation(location.capitalize(), distance, countryCode)
-        if (foundUsers.isEmpty()) {
-            return ResponseEntity<Error>(HttpStatus.NOT_FOUND)
-        }
         return ResponseEntity.ok(foundUsers)
     }
 

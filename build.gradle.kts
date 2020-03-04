@@ -34,10 +34,18 @@ dependencies {
     implementation("com.byteowls:jopencage:1.3.0")
 
 
-    // developmentOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
+    testImplementation("org.jetbrains.kotlin:kotlin-test")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
+    testImplementation("io.kotlintest:kotlintest-extensions-spring:3.4.2")
+    testImplementation("io.kotlintest:kotlintest-runner-junit5:3.4.2")
+    testImplementation("org.junit.platform:junit-platform-commons:1.5.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.4.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.4.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.4.2")
+    testImplementation("io.mockk:mockk:1.9")
     testImplementation("com.google.truth:truth:0.42")
 }
 
