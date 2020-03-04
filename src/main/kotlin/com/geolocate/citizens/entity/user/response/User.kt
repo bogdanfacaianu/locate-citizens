@@ -1,9 +1,10 @@
 package com.geolocate.citizens.entity.user.response
 
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.geolocate.citizens.entity.coordinates.Coordinates
 
-data class User(
+data class User @JsonCreator constructor(
         @JsonProperty("id") val id: String = "",
         @JsonProperty("first_name") val firstName: String = "",
         @JsonProperty("last_name") val lastName: String = "",

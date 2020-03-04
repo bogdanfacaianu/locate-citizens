@@ -1,6 +1,7 @@
 package com.geolocate.citizens.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.geolocate.citizens.CITY
 import com.geolocate.citizens.COUNTRY_CODE
 import com.geolocate.citizens.DISTANCE
@@ -25,7 +26,7 @@ class UsersControllerTest {
     private val controller = UsersController(usersLocationService)
     private var mockMvc: MockMvc = standaloneSetup(controller).build()
 
-    private val objectMapper = ObjectMapper()
+    private val objectMapper = ObjectMapper().registerModule(KotlinModule())
 
     @Before
     fun setUp() {
@@ -35,22 +36,22 @@ class UsersControllerTest {
 
     @Test
     fun `when request comes with no parameters, use default and return users found`() {
-        val distance = "30.0"
-        val response = given_requestReturnsResults()
+        val distance = 30.0
+        val response = given_requestReturnsResults(distance)
 
         mockMvc.perform(get("/getAllUsersInLocation")
                 .param("location", CITY)
                 .param("countryCode", COUNTRY_CODE)
-                .param("distance", distance))
+                .param("distance", distance.toString()))
                 .andExpect(MockMvcResultMatchers.status().isOk)
                 .andExpect(MockMvcResultMatchers.content().json(response))
 
-        verify { usersLocationService.getUserDataInLocation(CITY, distance.toDouble(), COUNTRY_CODE) }
+        verify { usersLocationService.getUserDataInLocation(CITY, distance, COUNTRY_CODE) }
     }
 
     @Test
     fun `when no parameters given default ones are considered and request returns successfully`() {
-        val response = given_requestReturnsResults()
+        val response = given_requestReturnsResults(DISTANCE)
         mockMvc.perform(get("/getAllUsersInLocation"))
                 .andExpect(MockMvcResultMatchers.status().isOk)
                 .andExpect(MockMvcResultMatchers.content().json(response))
@@ -58,11 +59,11 @@ class UsersControllerTest {
         verify { usersLocationService.getUserDataInLocation(CITY, DISTANCE, COUNTRY_CODE) }
     }
 
-    private fun given_requestReturnsResults(): String {
+    private fun given_requestReturnsResults(distance: Double): String {
         val users = setOf(createUser())
         val response = objectMapper.writeValueAsString(users)
 
-        every { usersLocationService.getUserDataInLocation(CITY, DISTANCE, COUNTRY_CODE) } returns getAllLondonUsers()
+        every { usersLocationService.getUserDataInLocation(CITY, distance, COUNTRY_CODE) } returns users
 
         return response
     }
