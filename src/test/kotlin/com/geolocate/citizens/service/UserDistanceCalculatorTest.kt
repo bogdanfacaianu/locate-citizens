@@ -1,6 +1,6 @@
 package com.geolocate.citizens.service
 
-import com.geolocate.citizens.CITY
+import com.geolocate.citizens.LONDON_CITY
 import com.geolocate.citizens.DISTANCE
 import com.geolocate.citizens.LONDON_LATITUDE
 import com.geolocate.citizens.LONDON_LONGITUDE
@@ -17,16 +17,16 @@ class UserDistanceCalculatorTest {
     fun `distance is calculated between coordinates and new updated list is returned`() {
         val allLondonUsers = getUsersForLocation()
 
-        val result = setUsersWithDistance(allLondonUsers, DISTANCE, centralPoint, CITY)
+        val result = setUsersWithDistance(allLondonUsers, DISTANCE, centralPoint, LONDON_CITY)
 
-        verify_allLondonUsersHaveBeenRetrieved(result)
+        verify_allLondonUsersHaveBeenRetrieved(result, getUsersForLocation())
     }
 
     @Test
     fun `empty list is returned if all locations are too far`() {
         val allUsersOutsideRadius = getAllUsersOutsideRadius()
 
-        val result = setUsersWithDistance(allUsersOutsideRadius, DISTANCE, centralPoint, CITY)
+        val result = setUsersWithDistance(allUsersOutsideRadius, DISTANCE, centralPoint, LONDON_CITY)
 
         result shouldBe emptySet()
 
@@ -34,7 +34,7 @@ class UserDistanceCalculatorTest {
 
     @Test
     fun `empty list is returned if no users found`() {
-        val result = setUsersWithDistance(emptySet(), DISTANCE, centralPoint, CITY)
+        val result = setUsersWithDistance(emptySet(), DISTANCE, centralPoint, LONDON_CITY)
 
         result shouldBe emptySet()
     }

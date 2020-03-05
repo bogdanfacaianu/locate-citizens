@@ -1,6 +1,6 @@
 package com.geolocate.citizens.service
 
-import com.geolocate.citizens.CITY
+import com.geolocate.citizens.LONDON_CITY
 import com.geolocate.citizens.COUNTRY_CODE
 import com.geolocate.citizens.DISTANCE
 import com.geolocate.citizens.LONDON_COORDINATES
@@ -33,7 +33,7 @@ class UsersLocationServiceTest {
     fun `getting user data in location not found returns an empty result`() {
         given_LocationCacheCannotFindLocationCoordinates()
 
-        val result = usersLocationService.getUserDataInLocation(CITY, DISTANCE, COUNTRY_CODE)
+        val result = usersLocationService.getUserDataInLocation(LONDON_CITY, DISTANCE, COUNTRY_CODE)
 
         result shouldBe emptySet()
     }
@@ -43,21 +43,21 @@ class UsersLocationServiceTest {
         given_LocationCacheReturnsLondonCoordinates()
         given_theUsersFoundInLocationRadius()
 
-        val result = usersLocationService.getUserDataInLocation(CITY, DISTANCE, COUNTRY_CODE)
+        val result = usersLocationService.getUserDataInLocation(LONDON_CITY, DISTANCE, COUNTRY_CODE)
 
         result shouldBe getUsersForLocation()
     }
 
     private fun given_LocationCacheCannotFindLocationCoordinates() {
-        every { geoLocationCache.getGeoLocation(CITY, COUNTRY_CODE) } returns null
+        every { geoLocationCache.getGeoLocation(LONDON_CITY, COUNTRY_CODE) } returns null
     }
 
     private fun given_LocationCacheReturnsLondonCoordinates() {
-        val geoLocation = GeoLocation("locationKey", CITY, COUNTRY_CODE, Coordinates(LONDON_LATITUDE, LONDON_LONGITUDE))
-        every { geoLocationCache.getGeoLocation(CITY, COUNTRY_CODE) } returns geoLocation
+        val geoLocation = GeoLocation("locationKey", LONDON_CITY, COUNTRY_CODE, Coordinates(LONDON_LATITUDE, LONDON_LONGITUDE))
+        every { geoLocationCache.getGeoLocation(LONDON_CITY, COUNTRY_CODE) } returns geoLocation
     }
 
     private fun given_theUsersFoundInLocationRadius() {
-        every { userService.getUsersForData(CITY, DISTANCE, LONDON_COORDINATES) } returns getUsersForLocation()
+        every { userService.getUsersForData(LONDON_CITY, DISTANCE, LONDON_COORDINATES) } returns getUsersForLocation()
     }
 }

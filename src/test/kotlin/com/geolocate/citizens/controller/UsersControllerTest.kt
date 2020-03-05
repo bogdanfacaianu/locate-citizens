@@ -2,11 +2,10 @@ package com.geolocate.citizens.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
-import com.geolocate.citizens.CITY
+import com.geolocate.citizens.LONDON_CITY
 import com.geolocate.citizens.COUNTRY_CODE
 import com.geolocate.citizens.DISTANCE
 import com.geolocate.citizens.createUser
-import com.geolocate.citizens.getAllLondonUsers
 import com.geolocate.citizens.service.UsersLocationService
 import io.mockk.clearAllMocks
 import io.mockk.every
@@ -40,13 +39,13 @@ class UsersControllerTest {
         val response = given_requestReturnsResults(distance)
 
         mockMvc.perform(get("/getAllUsersInLocation")
-                .param("location", CITY)
+                .param("location", LONDON_CITY)
                 .param("countryCode", COUNTRY_CODE)
                 .param("distance", distance.toString()))
                 .andExpect(MockMvcResultMatchers.status().isOk)
                 .andExpect(MockMvcResultMatchers.content().json(response))
 
-        verify { usersLocationService.getUserDataInLocation(CITY, distance, COUNTRY_CODE) }
+        verify { usersLocationService.getUserDataInLocation(LONDON_CITY, distance, COUNTRY_CODE) }
     }
 
     @Test
@@ -56,14 +55,14 @@ class UsersControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk)
                 .andExpect(MockMvcResultMatchers.content().json(response))
 
-        verify { usersLocationService.getUserDataInLocation(CITY, DISTANCE, COUNTRY_CODE) }
+        verify { usersLocationService.getUserDataInLocation(LONDON_CITY, DISTANCE, COUNTRY_CODE) }
     }
 
     private fun given_requestReturnsResults(distance: Double): String {
         val users = setOf(createUser())
         val response = objectMapper.writeValueAsString(users)
 
-        every { usersLocationService.getUserDataInLocation(CITY, distance, COUNTRY_CODE) } returns users
+        every { usersLocationService.getUserDataInLocation(LONDON_CITY, distance, COUNTRY_CODE) } returns users
 
         return response
     }

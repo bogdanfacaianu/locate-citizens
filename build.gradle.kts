@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
     id("org.springframework.boot") version "2.2.5.RELEASE"
@@ -34,18 +35,22 @@ dependencies {
     implementation("com.byteowls:jopencage:1.3.0")
 
 
-    testImplementation("org.springframework.boot:spring-boot-starter-test") {
-        exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
-    }
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
+
     testImplementation("io.kotlintest:kotlintest-extensions-spring:3.4.2")
     testImplementation("io.kotlintest:kotlintest-runner-junit5:3.4.2")
+
     testImplementation("org.junit.platform:junit-platform-commons:1.5.2")
+
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.4.2")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.4.2")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.4.2")
+
     testImplementation("io.mockk:mockk:1.9")
+
     testImplementation("com.google.truth:truth:0.42")
 }
 
@@ -58,4 +63,19 @@ tasks.withType<KotlinCompile> {
         freeCompilerArgs = listOf("-Xjsr305=strict")
         jvmTarget = "1.8"
     }
+}
+
+tasks.getByName<Jar>("jar") {
+    enabled = true
+}
+
+tasks.getByName<BootJar>("bootJar") {
+    mainClassName = "com.geolocate.citizens.LocateCitizensApplication"
+    manifest {
+        attributes("Start-Class" to "com.geolocate.citizens.LocateCitizensApplicationKt")
+    }
+}
+
+springBoot {
+    mainClassName = "com.geolocate.citizens.LocateCitizensApplicationKt"
 }

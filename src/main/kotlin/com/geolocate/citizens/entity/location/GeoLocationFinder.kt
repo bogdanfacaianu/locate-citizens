@@ -3,7 +3,6 @@ package com.geolocate.citizens.entity.location
 import com.byteowls.jopencage.JOpenCageGeocoder
 import com.byteowls.jopencage.model.JOpenCageForwardRequest
 import com.byteowls.jopencage.model.JOpenCageLatLng
-import com.byteowls.jopencage.model.JOpenCageResponse
 import com.geolocate.citizens.entity.coordinates.Coordinates
 import com.geolocate.citizens.entity.location.GeoLocation.Companion.UK_COUNTRY_CODE
 import mu.KotlinLogging
@@ -29,8 +28,13 @@ class GeoLocationFinder(
         request.limit = 1;
         request.isNoAnnotations = true;
 
-        val response = jOpenCageGeocoder.forward(request)
-        return response?.firstPosition
+        return try {
+            val response = jOpenCageGeocoder.forward(request)
+            return response?.firstPosition
+        } catch (ex: Exception) {
+            logger.error { "Finding Coordinates for location failed with error ${ex.message}" }
+            null
+        }
     }
 
     private fun buildResult(locationFound: JOpenCageLatLng?, location: String): Coordinates? {

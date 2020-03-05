@@ -2,8 +2,6 @@ package com.geolocate.citizens.service
 
 import com.geolocate.citizens.entity.coordinates.Coordinates
 import com.geolocate.citizens.entity.user.response.User
-import org.springframework.stereotype.Service
-
 
 internal fun setUsersWithDistance(
             users: Collection<User>,

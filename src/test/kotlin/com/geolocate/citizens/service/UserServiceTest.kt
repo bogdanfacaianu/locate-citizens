@@ -1,18 +1,15 @@
 package com.geolocate.citizens.service
 
-import com.geolocate.citizens.CITY
+import com.geolocate.citizens.LONDON_CITY
 import com.geolocate.citizens.DISTANCE
 import com.geolocate.citizens.LONDON_COORDINATES
 import com.geolocate.citizens.entity.user.UsersApiOperations
-import com.geolocate.citizens.entity.user.response.User
 import com.geolocate.citizens.getAllLondonUsers
 import com.geolocate.citizens.getAllUsers
 import com.geolocate.citizens.getAllUsersOutsideRadius
 import com.geolocate.citizens.getUsersForLocation
 import com.geolocate.citizens.verify_allLondonUsersHaveBeenRetrieved
 import com.geolocate.citizens.verify_allUsersHaveInitialDistanceOfZero
-import com.geolocate.citizens.verify_allUsersHaveUpdatedDistances
-import io.kotlintest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotlintest.shouldBe
 import io.mockk.clearAllMocks
 import io.mockk.every
@@ -35,16 +32,16 @@ class UserServiceTest {
         given_allTheUsersFoundInRadius()
         given_theUsersFoundInLocationAndRadius()
 
-        val response = userService.getUsersForData(CITY, DISTANCE, LONDON_COORDINATES)
+        val response = userService.getUsersForData(LONDON_CITY, DISTANCE, LONDON_COORDINATES)
 
-        verify_allLondonUsersHaveBeenRetrieved(response)
+        verify_allLondonUsersHaveBeenRetrieved(response, getAllLondonUsers())
     }
 
     @Test
     fun `given users only outside the radius looking for all users should return an empty result`() {
         given_allTheUsersFoundOutsideRadius()
 
-        val response = userService.getUsersForData(CITY, DISTANCE, LONDON_COORDINATES)
+        val response = userService.getUsersForData(LONDON_CITY, DISTANCE, LONDON_COORDINATES)
 
         response shouldBe emptySet()
     }
@@ -64,6 +61,6 @@ class UserServiceTest {
     private fun given_allTheUsersFoundInRadius() {
         val usersForLocation = getUsersForLocation()
         verify_allUsersHaveInitialDistanceOfZero(usersForLocation)
-        every { usersApiOperations.getAllCityUsers(CITY) } returns usersForLocation
+        every { usersApiOperations.getAllCityUsers(LONDON_CITY) } returns usersForLocation
     }
 }
