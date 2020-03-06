@@ -1,7 +1,10 @@
 package com.geolocate.citizens.entity.location
 
 import com.geolocate.citizens.entity.coordinates.Coordinates
+import mu.KotlinLogging
 import org.springframework.stereotype.Component
+
+private val logger = KotlinLogging.logger {}
 
 @Component
 class GeoLocationCache(
@@ -26,6 +29,7 @@ class GeoLocationCache(
     fun retrieveFromCache(key: String) = cache[key]
 
     private fun saveLocation(geoLocation: GeoLocation) {
+        logger.info { "Caching value $geoLocation" }
         cache[geoLocation.key] = geoLocation
     }
 
